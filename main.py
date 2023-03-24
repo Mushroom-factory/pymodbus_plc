@@ -3,8 +3,8 @@ from pymodbus.constants import Endian
 from pymodbus.payload import BinaryPayloadDecoder
 
 # Set up a Modbus TCP/IP client and connect to the PLC:
-plc_ip = '192.168.1.1' # replace with your PLC's IP address
-plc_port = 502 # replace with your PLC's Modbus TCP/IP port number
+plc_ip = '192.168.1.10' # replace with your PLC's IP address
+plc_port = 5020 # replace with your PLC's Modbus TCP/IP port number
 
 client = ModbusTcpClient(plc_ip, port=plc_port)
 client.connect()

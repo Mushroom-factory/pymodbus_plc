@@ -5,11 +5,19 @@ from pymodbus.client.sync import ModbusTcpClient
 from pymodbus.payload import BinaryPayloadDecoder, BinaryPayloadBuilder
 from pymodbus.constants import Endian
 
+plc_ip = '192.168.1.10' # replace with your PLC's IP address
+plc_port = 503 # replace with your PLC's Modbus TCP/IP port number
+start_address = 101
+# Can't be 30101 because it's higher than the register
+# should be 101 or 0x01
 
-client = ModbusTcpClient('192.168.1.1') # PLC IP
+# Set the number of registers to read
+num_registers = 20
+
+client = ModbusTcpClient(plc_ip, port=plc_port)
 client.connect()
 
-result = client.read_holding_registers(address=30101, count=3)
+result = client.read_input_registers(address= start_address, count=num_registers, unit=2)
 
 if result.isError():
     print('Error reading registers:', result)
@@ -18,6 +26,7 @@ else:
     value1 = decoder.decode_32bit_float()
     value2 = decoder.decode_32bit_float()
     value3 = decoder.decode_32bit_float()
+    print('value 1 = {}, value 2 = {}, value 3 = {}'.format(value1,value2,value3))
 
 
 builder = BinaryPayloadBuilder(byteorder=Endian.Big)
@@ -25,7 +34,7 @@ builder.add_32bit_float(23.3)
 builder.add_32bit_float(1000.56)
 payload = builder.to_registers()
 
-result = client.write_registers(address=30104, values=payload)
+result = client.write_registers(address=104, values=payload)
 
 if result.isError():
     print('Error writing registers:', result)
