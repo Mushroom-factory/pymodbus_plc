@@ -31,11 +31,11 @@ else:
 
 
 builder = BinaryPayloadBuilder(byteorder=Endian.Big)
-builder.add_32bit_float(23.3)
-builder.add_32bit_float(1000.56)
+builder.add_16bit_int(23)
+builder.add_16bit_int(1000)
 payload = builder.to_registers()
 
-result = client.write_registers(address=104, values=payload)
+result = client.write_registers(address=10, values=payload)
 
 if result.isError():
     print('Error writing registers:', result)
