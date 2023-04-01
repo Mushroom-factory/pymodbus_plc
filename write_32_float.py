@@ -31,7 +31,7 @@ else:
 
 
 builder = BinaryPayloadBuilder(byteorder=Endian.Big)
-builder.add_32bit_float(23.2)
+builder.add_32bit_float(52)
 builder.add_32bit_float(10.3)
 payload = builder.to_registers()
 
